@@ -2,129 +2,225 @@ import React, { useState } from "react";
 import "./index.css";
 const tabs = ["Name", "Contact", "Birth", "Submit"];
 export default function App() {
+  const [stage, setStage] = useState(0);
   return (
     <div className="app">
       <div className="container">
-        <h2 className="center">Signup Form</h2>
-        <Tab />
+        <h2 className="center">
+          {stage < tabs.length ? "Signup Form" : "Congratulations"}
+        </h2>
+        <Tab stage={stage} setStage={setStage} />
       </div>
-      {/* <ScoutX /> */}
-      {/* <Form /> */}
     </div>
   );
 }
 
-function Tab() {
-  const [stage, setStage] = useState(0);
+function Tab({ stage, setStage }) {
+  // STATES
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [telephone, setTelephone] = useState("");
+  const [date, setDate] = useState("");
+  const [gender, setGender] = useState("");
+
+  // CTA
   function handlePrevPage() {
-    setStage(stage - 1);
+    stage === tabs.length ? setStage(0) : setStage(stage - 1);
   }
   function handleNextPage() {
     setStage(stage + 1);
   }
   return (
     <div className="main">
-      <div className="flex">
-        {tabs.map((tab, i) => (
-          <h4 className={stage >= i + 1 ? "tab completed" : "tab"}>{tab}</h4>
-        ))}
-      </div>
+      {stage < tabs.length ? (
+        <>
+          <div className="flex">
+            {tabs.map((tab, i) => (
+              <h4 className={stage >= i + 1 ? "tab completed" : "tab"}>
+                {tab}
+              </h4>
+            ))}
+          </div>
+          <div className="flex tab-btns">
+            {tabs.map((_, i) => (
+              <div
+                className={
+                  stage >= i + 1 ? "tab-btn tab-btn-completed" : "tab-btn"
+                }
+              >
+                {i + 1}
+              </div>
+            ))}
+          </div>
+        </>
+      ) : null}
       <main>
-        {stage === 0 && <Name />}
-        {stage === 1 && <Contact />}
-        {stage === 2 && <Birth />}
-        {stage === 3 && <Submit />}
+        {stage === 0 && (
+          <Name
+            setFirstName={setFirstName}
+            setLastName={setLastName}
+            firstName={firstName}
+            lastName={lastName}
+          />
+        )}
+        {stage === 1 && (
+          <Contact
+            setTelephone={setTelephone}
+            setEmail={setEmail}
+            telephone={telephone}
+            email={email}
+          />
+        )}
+        {stage === 2 && (
+          <Birth
+            date={date}
+            setDate={setDate}
+            gender={gender}
+            setGender={setGender}
+          />
+        )}
+        {stage === 3 && (
+          <Submit
+            firstName={firstName}
+            lastName={lastName}
+            email={email}
+            telephone={telephone}
+            gender={gender}
+            date={date}
+          />
+        )}
         {stage === 4 && <Completed />}
-        {stage === 5 && <LogIn />}
       </main>
+      {/* CALL TO ACTION */}
       <div className="btn">
-        {stage > 0 && stage > tabs.length ? (
+        {stage > 0 ? (
           <div className="prev" onClick={handlePrevPage}>
-            PREVIOUS
+            {stage === tabs.length ? "RESET" : "PREVIOUS"}
           </div>
         ) : null}
         {stage < tabs.length && (
           <div className="next" onClick={handleNextPage}>
-            {stage > tabs.length ? "SUBMIT" : "NEXT"}
+            {stage === tabs.length - 1 ? "SUBMIT" : "NEXT"}
           </div>
         )}
-        {stage === tabs.length && <div className="filled">Log In</div>}
       </div>
     </div>
   );
 }
-function Name() {
-  return <div className="name">Name Page</div>;
+function Name({ setFirstName, setLastName, firstName, lastName }) {
+  const details = ["First", "Last"];
+  function handleBasicInfo(e) {
+    e.preventDefault();
+    // console.log(e);
+    e.target.name === "firstName"
+      ? setFirstName(e.target.value)
+      : setLastName(e.target.value);
+  }
+  return (
+    <div className="name">
+      <h1>Basic Info:</h1>
+      {details.map((pos, i) => (
+        <div>
+          <form>
+            <p>{pos} Name</p>
+            <input
+              type="text"
+              // {i === 0 ? {name="firstName",value = firstName} : (name="lastName",value = lastName) }
+              name={i === 0 ? "firstName" : "lastName"}
+              value={i === 0 ? firstName : lastName}
+              onChange={handleBasicInfo}
+            />
+          </form>
+        </div>
+      ))}
+    </div>
+  );
 }
-function Contact() {
-  return <div className="contact">Contact Page</div>;
+function Contact({ email, telephone, setEmail, setTelephone }) {
+  const details = ["Email", "Telephone"];
+  function handleContact(e) {
+    e.preventDefault();
+    // console.log(e);
+    e.target.name === "telephone"
+      ? setTelephone(e.target.value)
+      : setEmail(e.target.value);
+  }
+  return (
+    <div className="contact">
+      <h1>Contact Info:</h1>
+      {details.map((pos, i) => (
+        <div>
+          <form>
+            <p>{pos}</p>
+            <input
+              type={i === 0 ? "email" : "tel"}
+              name={i === 0 ? "email" : "telephone"}
+              value={i === 0 ? email : telephone}
+              onChange={handleContact}
+            />
+          </form>
+        </div>
+      ))}
+    </div>
+  );
 }
-function Birth() {
-  return <div className="birth"> Birth Page</div>;
+function Birth({ date, setDate, gender, setGender }) {
+  function handleDate(e) {
+    setDate(e.target.value);
+  }
+  function handleGender(e) {
+    setGender(e.target.value);
+  }
+  return (
+    <div className="birth">
+      <h1>Date of Birth:</h1>
+      <form>
+        <div>
+          <p>Date</p>
+          <input type="date" name="" value={date} onChange={handleDate} />
+        </div>
+        <div>
+          <p>Gender</p>
+          <select onChange={handleGender}>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </select>
+        </div>
+      </form>
+    </div>
+  );
 }
-function Submit() {
-  return <div className="submit">Submit Page</div>;
+function Submit({ lastName, firstName, email, telephone, date, gender }) {
+  return (
+    <div className="submit">
+      <div>
+        <p className="title">First Name : </p>
+        <p className="descp">{firstName}</p>
+      </div>
+      <div>
+        <p className="title">Last Name : </p>
+        <p className="descp">{lastName}</p>
+      </div>
+      <div>
+        <p className="title">Email : </p>
+        <p className="descp">{email}</p>
+      </div>
+      <div>
+        <p className="title">Phone Number : </p>
+        <p className="descp">{telephone}</p>
+      </div>
+      <div>
+        <p className="title">Data of Birth : </p>
+        <p className="descp">{date}</p>
+      </div>
+      <div>
+        <p className="title">Gender : </p>
+        <p className="descp">{gender}</p>
+      </div>
+    </div>
+  );
 }
 function Completed() {
   return <div className="completed-page">Thanks</div>;
 }
-function LogIn() {
-  return <div className="log-in">LOG IN</div>;
-}
-// function Form() {
-//   const [description, setDescription] = useState("");
-//   const [quantity, setQuantity] = useState(5);
-//   function handleSubmit(e) {
-//     e.preventDefault();
-//     if (!description) return;
-//     const newItem = { description, quantity, packed: false, id: Date.now() };
-//     setDescription("");
-//     setQuantity(1);
-//   }
-
-// const navbar = [
-//   {
-//     name: "Home",
-//     id: 1,
-//     content: "Home page",
-//   },
-//   {
-//     name: "Parameters",
-//     id: 2,
-//     content: "Parameter page",
-//   },
-//   {
-//     name: "Command",
-//     id: 3,
-//     content: "Command page",
-//   },
-//   {
-//     name: "Others",
-//     id: 4,
-//     content: "Other page",
-//   },
-// ];
-// function ScoutX() {
-//   const [selectedId, setSelectedId] = useState(null);
-//   function handleNav(id) {
-//     setSelectedId(id !== selectedId ? id : null);
-//   }
-//   return (
-//     <div className="scout-container">
-//       <div>
-//         {navbar.map((nav) => (
-//           <div
-//             className={
-//               nav.id === selectedId ? "scout-nav selected" : "scout-nav"
-//             }
-//             onClick={() => handleNav(nav.id)}
-//             key={nav.id}
-//           >
-//             {nav.name}
-//           </div>
-//         ))}
-//       </div>
-//       <div className="content"></div>
-//     </div>
-//   );
-// }
