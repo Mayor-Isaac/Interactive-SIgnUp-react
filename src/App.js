@@ -6,7 +6,7 @@ export default function App() {
   return (
     <div className="app">
       <div className="container">
-        <h2 className="center">
+        <h2 className="center bokor-regular completed">
           {stage < tabs.length ? "Signup Form" : "Congratulations"}
         </h2>
         <Tab stage={stage} setStage={setStage} />
@@ -22,13 +22,30 @@ function Tab({ stage, setStage }) {
   const [email, setEmail] = useState("");
   const [telephone, setTelephone] = useState("");
   const [date, setDate] = useState("");
-  const [gender, setGender] = useState("");
+  const [gender, setGender] = useState("Male");
 
   // CTA
   function handlePrevPage() {
-    stage === tabs.length ? setStage(0) : setStage(stage - 1);
+    if (stage === tabs.length) {
+      setFirstName("");
+      setLastName("");
+      setEmail("");
+      setTelephone("");
+      setDate("");
+      setGender("Male");
+      setStage(0);
+    } else setStage(stage - 1);
   }
   function handleNextPage() {
+    if (stage === 0) {
+      if (!lastName || !firstName) return;
+    }
+    if (stage === 1) {
+      if (!email || !telephone) return;
+    }
+    if (stage === 2) {
+      if (!date || !gender) return;
+    }
     setStage(stage + 1);
   }
   return (
@@ -90,10 +107,10 @@ function Tab({ stage, setStage }) {
             date={date}
           />
         )}
-        {stage === 4 && <Completed />}
+        {stage === 4 && <Completed firstName={firstName} />}
       </main>
       {/* CALL TO ACTION */}
-      <div className="btn">
+      <div className="btn bokor-regular">
         {stage > 0 ? (
           <div className="prev" onClick={handlePrevPage}>
             {stage === tabs.length ? "RESET" : "PREVIOUS"}
@@ -195,32 +212,50 @@ function Submit({ lastName, firstName, email, telephone, date, gender }) {
   return (
     <div className="submit">
       <div>
-        <p className="title">First Name : </p>
+        <p className="title completed">First Name : </p>
         <p className="descp">{firstName}</p>
       </div>
       <div>
-        <p className="title">Last Name : </p>
+        <p className="title completed">Last Name : </p>
         <p className="descp">{lastName}</p>
       </div>
       <div>
-        <p className="title">Email : </p>
+        <p className="title completed">Email : </p>
         <p className="descp">{email}</p>
       </div>
       <div>
-        <p className="title">Phone Number : </p>
+        <p className="title completed">Phone Number : </p>
         <p className="descp">{telephone}</p>
       </div>
       <div>
-        <p className="title">Data of Birth : </p>
+        <p className="title completed">Data of Birth : </p>
         <p className="descp">{date}</p>
       </div>
       <div>
-        <p className="title">Gender : </p>
+        <p className="title completed">Gender : </p>
         <p className="descp">{gender}</p>
       </div>
     </div>
   );
 }
-function Completed() {
-  return <div className="completed-page">Thanks</div>;
+function Completed({ firstName }) {
+  return (
+    <div className="completed-page">
+      <h1>
+        Thanks
+        <span className="bokor-regular">
+          <i>
+            {" "}
+            {firstName.charAt(0).toUpperCase() +
+              firstName.slice(1).toLowerCase()}
+          </i>
+          ,
+        </span>
+      </h1>
+      <p>Welcome to Smart Lab.</p>
+      <p>
+        <i class="fa-solid fa-handshake completed"></i>
+      </p>
+    </div>
+  );
 }
