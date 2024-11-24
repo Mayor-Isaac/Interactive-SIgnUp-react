@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import "./index.css";
+import { Completed } from "./Completed";
+import { Submit } from "./Submit";
 const tabs = ["Name", "Contact", "Birth", "Submit"];
 export default function App() {
   const [stage, setStage] = useState(0);
@@ -205,57 +207,6 @@ function Birth({ date, setDate, gender, setGender }) {
           </select>
         </div>
       </form>
-    </div>
-  );
-}
-function Submit({ lastName, firstName, email, telephone, date, gender }) {
-  return (
-    <div className="submit">
-      <div>
-        <p className="title completed">First Name : </p>
-        <p className="descp">{firstName}</p>
-      </div>
-      <div>
-        <p className="title completed">Last Name : </p>
-        <p className="descp">{lastName}</p>
-      </div>
-      <div>
-        <p className="title completed">Email : </p>
-        <p className="descp">{email}</p>
-      </div>
-      <div>
-        <p className="title completed">Phone Number : </p>
-        <p className="descp">{telephone}</p>
-      </div>
-      <div>
-        <p className="title completed">Data of Birth : </p>
-        <p className="descp">{date}</p>
-      </div>
-      <div>
-        <p className="title completed">Gender : </p>
-        <p className="descp">{gender}</p>
-      </div>
-    </div>
-  );
-}
-function Completed({ firstName }) {
-  return (
-    <div className="completed-page">
-      <h1>
-        Thanks
-        <span className="bokor-regular">
-          <i>
-            {" "}
-            {firstName.charAt(0).toUpperCase() +
-              firstName.slice(1).toLowerCase()}
-          </i>
-          ,
-        </span>
-      </h1>
-      <p>Welcome to Smart Lab.</p>
-      <p>
-        <i class="fa-solid fa-handshake completed"></i>
-      </p>
     </div>
   );
 }
