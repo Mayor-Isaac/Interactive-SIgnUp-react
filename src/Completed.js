@@ -1,6 +1,6 @@
 import React from "react";
 
-export function Completed({ firstName }) {
+export default function Completed({ firstName }) {
   return (
     <div className="completed-page">
       <h1>

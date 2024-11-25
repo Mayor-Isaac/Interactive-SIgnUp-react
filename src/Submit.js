@@ -1,6 +1,6 @@
 import React from "react";
 
-export function Submit({
+export default function Submit({
   lastName,
   firstName,
   email,

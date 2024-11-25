@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import "./index.css";
-import { Completed } from "./Completed";
-import { Submit } from "./Submit";
+import Completed from "./Completed";
+import Submit from "./Submit";
+import Birth from "./Birth";
+import Contact from "./Contact";
+import Name from "./Name";
 const tabs = ["Name", "Contact", "Birth", "Submit"];
 export default function App() {
   const [stage, setStage] = useState(0);
@@ -124,89 +127,6 @@ function Tab({ stage, setStage }) {
           </div>
         )}
       </div>
-    </div>
-  );
-}
-function Name({ setFirstName, setLastName, firstName, lastName }) {
-  const details = ["First", "Last"];
-  function handleBasicInfo(e) {
-    e.preventDefault();
-    // console.log(e);
-    e.target.name === "firstName"
-      ? setFirstName(e.target.value)
-      : setLastName(e.target.value);
-  }
-  return (
-    <div className="name">
-      <h1>Basic Info:</h1>
-      {details.map((pos, i) => (
-        <div>
-          <form>
-            <p>{pos} Name</p>
-            <input
-              type="text"
-              // {i === 0 ? {name="firstName",value = firstName} : (name="lastName",value = lastName) }
-              name={i === 0 ? "firstName" : "lastName"}
-              value={i === 0 ? firstName : lastName}
-              onChange={handleBasicInfo}
-            />
-          </form>
-        </div>
-      ))}
-    </div>
-  );
-}
-function Contact({ email, telephone, setEmail, setTelephone }) {
-  const details = ["Email", "Telephone"];
-  function handleContact(e) {
-    e.preventDefault();
-    // console.log(e);
-    e.target.name === "telephone"
-      ? setTelephone(e.target.value)
-      : setEmail(e.target.value);
-  }
-  return (
-    <div className="contact">
-      <h1>Contact Info:</h1>
-      {details.map((pos, i) => (
-        <div>
-          <form>
-            <p>{pos}</p>
-            <input
-              type={i === 0 ? "email" : "tel"}
-              name={i === 0 ? "email" : "telephone"}
-              value={i === 0 ? email : telephone}
-              onChange={handleContact}
-            />
-          </form>
-        </div>
-      ))}
-    </div>
-  );
-}
-function Birth({ date, setDate, gender, setGender }) {
-  function handleDate(e) {
-    setDate(e.target.value);
-  }
-  function handleGender(e) {
-    setGender(e.target.value);
-  }
-  return (
-    <div className="birth">
-      <h1>Date of Birth:</h1>
-      <form>
-        <div>
-          <p>Date</p>
-          <input type="date" name="" value={date} onChange={handleDate} />
-        </div>
-        <div>
-          <p>Gender</p>
-          <select onChange={handleGender}>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-          </select>
-        </div>
-      </form>
     </div>
   );
 }
