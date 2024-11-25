@@ -5,6 +5,7 @@ import Submit from "./Submit";
 import Birth from "./Birth";
 import Contact from "./Contact";
 import Name from "./Name";
+import Button from "./Button";
 const tabs = ["Name", "Contact", "Birth", "Submit"];
 export default function App() {
   const [stage, setStage] = useState(0);
@@ -117,14 +118,14 @@ function Tab({ stage, setStage }) {
       {/* CALL TO ACTION */}
       <div className="btn bokor-regular">
         {stage > 0 ? (
-          <div className="prev" onClick={handlePrevPage}>
+          <Button handleFunc={handlePrevPage} classGiven="prev">
             {stage === tabs.length ? "RESET" : "PREVIOUS"}
-          </div>
+          </Button>
         ) : null}
         {stage < tabs.length && (
-          <div className="next" onClick={handleNextPage}>
+          <Button handleFunc={handleNextPage} classGiven="next">
             {stage === tabs.length - 1 ? "SUBMIT" : "NEXT"}
-          </div>
+          </Button>
         )}
       </div>
     </div>
