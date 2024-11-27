@@ -14,7 +14,7 @@ export default function Completed({ firstName }) {
           ,
         </span>
       </h1>
-      <p>Welcome to Smart Lab.</p>
+      <p>Welcome to Quiver Science Academy.</p>
       <p>
         <i class="fa-solid fa-handshake completed"></i>
       </p>

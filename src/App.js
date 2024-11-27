@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import "./index.css";
-import Completed from "./Completed";
-import Submit from "./Submit";
-import Birth from "./Birth";
-import Contact from "./Contact";
-import Name from "./Name";
-import Button from "./Button";
+import Completed from "./Components/Completed";
+import Submit from "./Components/Submit";
+import Birth from "./Components/Birth";
+import Contact from "./Components/Contact";
+import Name from "./Components/Name";
+import Button from "./Components/Button";
 const tabs = ["Name", "Contact", "Birth", "Submit"];
 export default function App() {
   const [stage, setStage] = useState(0);
@@ -46,9 +46,9 @@ function Tab({ stage, setStage }) {
     if (stage === 0) {
       if (!lastName || !firstName) return;
     }
-    if (stage === 1) {
-      if (!email || !telephone) return;
-    }
+    // if (stage === 1) {
+    //   if (!email || !telephone) return;
+    // }
     if (stage === 2) {
       if (!date || !gender) return;
     }
