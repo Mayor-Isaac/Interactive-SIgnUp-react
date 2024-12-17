@@ -1,6 +1,8 @@
-import React from "react";
+import { useContext } from "react";
+import { DetailsContext } from "../DetailsContext";
 
-export default function Birth({ date, setDate, gender, setGender }) {
+export default function Birth() {
+  const { date, setDate, setGender } = useContext(DetailsContext);
   function handleDate(e) {
     setDate(e.target.value);
   }

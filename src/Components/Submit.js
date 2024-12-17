@@ -1,13 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
+import { DetailsContext } from "../DetailsContext";
 
-export default function Submit({
-  lastName,
-  firstName,
-  email,
-  telephone,
-  date,
-  gender,
-}) {
+export default function Submit() {
+  const { lastName, firstName, email, telephone, date, gender } =
+    useContext(DetailsContext);
+
   return (
     <div className="submit">
       <div>

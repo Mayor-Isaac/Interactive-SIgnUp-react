@@ -1,14 +1,20 @@
 import React, { useState } from "react";
+import { DetailsContext } from "./DetailsContext";
+
 import "./index.css";
+
 import Completed from "./Components/Completed";
 import Submit from "./Components/Submit";
 import Birth from "./Components/Birth";
 import Contact from "./Components/Contact";
 import Name from "./Components/Name";
 import Button from "./Components/Button";
+
 const tabs = ["Name", "Contact", "Birth", "Submit"];
+
 export default function App() {
   const [stage, setStage] = useState(0);
+
   return (
     <div className="app">
       <div className="container">
@@ -42,92 +48,78 @@ function Tab({ stage, setStage }) {
       setStage(0);
     } else setStage(stage - 1);
   }
+
   function handleNextPage() {
     if (stage === 0) {
       if (!lastName || !firstName) return;
     }
-    // if (stage === 1) {
-    //   if (!email || !telephone) return;
-    // }
     if (stage === 2) {
       if (!date || !gender) return;
     }
     setStage(stage + 1);
   }
+
   return (
-    <div className="main">
-      {stage < tabs.length ? (
-        <>
-          <div className="flex">
-            {tabs.map((tab, i) => (
-              <h4 className={stage >= i + 1 ? "tab completed" : "tab"}>
-                {tab}
-              </h4>
-            ))}
-          </div>
-          <div className="flex tab-btns">
-            {tabs.map((_, i) => (
-              <div
-                className={
-                  stage >= i + 1 ? "tab-btn tab-btn-completed" : "tab-btn"
-                }
-              >
-                {i + 1}
-              </div>
-            ))}
-          </div>
-        </>
-      ) : null}
-      <main>
-        {stage === 0 && (
-          <Name
-            setFirstName={setFirstName}
-            setLastName={setLastName}
-            firstName={firstName}
-            lastName={lastName}
-          />
-        )}
-        {stage === 1 && (
-          <Contact
-            setTelephone={setTelephone}
-            setEmail={setEmail}
-            telephone={telephone}
-            email={email}
-          />
-        )}
-        {stage === 2 && (
-          <Birth
-            date={date}
-            setDate={setDate}
-            gender={gender}
-            setGender={setGender}
-          />
-        )}
-        {stage === 3 && (
-          <Submit
-            firstName={firstName}
-            lastName={lastName}
-            email={email}
-            telephone={telephone}
-            gender={gender}
-            date={date}
-          />
-        )}
-        {stage === 4 && <Completed firstName={firstName} />}
-      </main>
-      {/* CALL TO ACTION */}
-      <div className="btn bokor-regular">
-        {stage > 0 ? (
-          <Button handleFunc={handlePrevPage} classGiven="prev">
-            {stage === tabs.length ? "RESET" : "PREVIOUS"}
-          </Button>
+    <DetailsContext.Provider
+      value={{
+        firstName,
+        setFirstName,
+        lastName,
+        setLastName,
+        email,
+        setEmail,
+        telephone,
+        setTelephone,
+        date,
+        setDate,
+        gender,
+        setGender,
+      }}
+    >
+      <div className="main">
+        {stage < tabs.length ? (
+          <>
+            <div className="flex">
+              {tabs.map((tab, i) => (
+                <h4 className={stage >= i + 1 ? "tab completed" : "tab"}>
+                  {tab}
+                </h4>
+              ))}
+            </div>
+            <div className="flex tab-btns">
+              {tabs.map((_, i) => (
+                <div
+                  className={
+                    stage >= i + 1 ? "tab-btn tab-btn-completed" : "tab-btn"
+                  }
+                >
+                  {i + 1}
+                </div>
+              ))}
+            </div>
+          </>
         ) : null}
-        {stage < tabs.length && (
-          <Button handleFunc={handleNextPage} classGiven="next">
-            {stage === tabs.length - 1 ? "SUBMIT" : "NEXT"}
-          </Button>
-        )}
+        <main>
+          {stage === 0 && <Name />}
+          {stage === 1 && <Contact />}
+          {stage === 2 && <Birth />}
+          {stage === 3 && <Submit />}
+          {stage === 4 && <Completed />}
+        </main>
+        {/* CALL TO ACTION */}
+        <div className="btn bokor-regular">
+          {stage > 0 ? (
+            <Button handleFunc={handlePrevPage} classGiven="prev">
+              {stage === tabs.length ? "RESET" : "PREVIOUS"}
+            </Button>
+          ) : null}
+          {stage < tabs.length && (
+            <Button handleFunc={handleNextPage} classGiven="next">
+              {stage === tabs.length - 1 ? "SUBMIT" : "NEXT"}
+            </Button>
+          )}
+        </div>
       </div>
-    </div>
+    </DetailsContext.Provider>
   );
 }

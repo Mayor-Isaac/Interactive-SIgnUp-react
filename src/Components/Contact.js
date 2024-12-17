@@ -1,14 +1,19 @@
-import React from "react";
+import React, { useContext } from "react";
+import { DetailsContext } from "../DetailsContext";
 
-export default function Contact({ email, telephone, setEmail, setTelephone }) {
+export default function Contact() {
+  const { email, telephone, setEmail, setTelephone } =
+    useContext(DetailsContext);
+
   const details = ["Email", "Telephone"];
+
   function handleContact(e) {
     e.preventDefault();
-    // console.log(e);
     e.target.name === "telephone"
       ? setTelephone(e.target.value)
       : setEmail(e.target.value);
   }
+
   return (
     <div className="contact">
       <h1>Contact Info:</h1>

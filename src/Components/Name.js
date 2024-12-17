@@ -1,12 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
+import { DetailsContext } from "../DetailsContext";
 
-export default function Name({
-  setFirstName,
-  setLastName,
-  firstName,
-  lastName,
-}) {
+export default function Name() {
+  const { setFirstName, setLastName, firstName, lastName } =
+    useContext(DetailsContext);
+
   const details = ["First", "Last"];
+
   function handleBasicInfo(e) {
     e.preventDefault();
     // console.log(e);
@@ -14,16 +14,16 @@ export default function Name({
       ? setFirstName(e.target.value)
       : setLastName(e.target.value);
   }
+
   return (
     <div className="name">
       <h1>Basic Info:</h1>
       {details.map((pos, i) => (
-        <div>
+        <div key={i}>
           <form>
             <p>{pos} Name</p>
             <input
               type="text"
-              // {i === 0 ? {name="firstName",value = firstName} : (name="lastName",value = lastName) }
               name={i === 0 ? "firstName" : "lastName"}
               value={i === 0 ? firstName : lastName}
               onChange={handleBasicInfo}

@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
+import { DetailsContext } from "../DetailsContext";
 
-export default function Completed({ firstName }) {
+export default function Completed() {
+  const { firstName } = useContext(DetailsContext);
+
   return (
     <div className="completed-page">
       <h1>
@@ -14,7 +17,7 @@ export default function Completed({ firstName }) {
           ,
         </span>
       </h1>
-      <p>Welcome to Quiver Science Academy.</p>
+      <p>Welcome to Smart Tech Company.</p>
       <p>
         <i class="fa-solid fa-handshake completed"></i>
       </p>
