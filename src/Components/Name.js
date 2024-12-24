@@ -1,9 +1,7 @@
-import React, { useContext } from "react";
-import { DetailsContext } from "../DetailsContext";
+import { useDetails } from "../DetailsContext";
 
 export default function Name() {
-  const { setFirstName, setLastName, firstName, lastName } =
-    useContext(DetailsContext);
+  const { firstName, lastName, dispatch } = useDetails();
 
   const details = ["First", "Last"];
 
@@ -11,8 +9,8 @@ export default function Name() {
     e.preventDefault();
     // console.log(e);
     e.target.name === "firstName"
-      ? setFirstName(e.target.value)
-      : setLastName(e.target.value);
+      ? dispatch({ type: "setFirstName", payload: e.target.value })
+      : dispatch({ type: "setLastName", payload: e.target.value });
   }
 
   return (

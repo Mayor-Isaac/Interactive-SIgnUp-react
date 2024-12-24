@@ -1,9 +1,7 @@
-import React, { useContext } from "react";
-import { DetailsContext } from "../DetailsContext";
+import { useDetails } from "../DetailsContext";
 
 export default function Submit() {
-  const { lastName, firstName, email, telephone, date, gender } =
-    useContext(DetailsContext);
+  const { lastName, firstName, email, telephone, date, gender } = useDetails();
 
   return (
     <div className="submit">
