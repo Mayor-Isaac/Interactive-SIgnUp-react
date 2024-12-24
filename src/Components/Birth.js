@@ -1,13 +1,12 @@
-import { useContext } from "react";
-import { DetailsContext } from "../DetailsContext";
+import { useDetails } from "../DetailsContext";
 
 export default function Birth() {
-  const { date, setDate, setGender } = useContext(DetailsContext);
+  const { date, dispatch } = useDetails();
   function handleDate(e) {
-    setDate(e.target.value);
+    dispatch({ type: "setDate", payload: e.target.value });
   }
   function handleGender(e) {
-    setGender(e.target.value);
+    dispatch({ type: "setGender", payload: e.target.value });
   }
   return (
     <div className="birth">

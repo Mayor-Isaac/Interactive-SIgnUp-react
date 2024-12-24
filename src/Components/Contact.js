@@ -1,17 +1,15 @@
-import React, { useContext } from "react";
-import { DetailsContext } from "../DetailsContext";
+import { useDetails } from "../DetailsContext";
 
 export default function Contact() {
-  const { email, telephone, setEmail, setTelephone } =
-    useContext(DetailsContext);
+  const { email, telephone, dispatch } = useDetails();
 
   const details = ["Email", "Telephone"];
 
   function handleContact(e) {
     e.preventDefault();
     e.target.name === "telephone"
-      ? setTelephone(e.target.value)
-      : setEmail(e.target.value);
+      ? dispatch({ type: "setTelephone", payload: e.target.value })
+      : dispatch({ type: "setEmail", payload: e.target.value });
   }
 
   return (
